@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.Box
 
 
 import androidx.compose.foundation.layout.Column
- import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -81,9 +81,11 @@ fun pizzaContent() {
         remember { mutableStateListOf(*Array(plateImages.size) { mutableStateOf(230.dp) }) }
     val pagerState = rememberPagerState()
 
-    val pizzaToppings = remember { mutableStateListOf(*Array(plateImages.size) { mutableListOf<Int>() }) }
+    val pizzaToppings =
+        remember { mutableStateListOf(*Array(plateImages.size) { mutableListOf<Int>() }) }
 
-    val selectedDrawables = remember { mutableStateListOf(*Array(plateImages.size) { mutableStateListOf(*Array(toppings.size) { false }) }) }
+    val selectedDrawables =
+        remember { mutableStateListOf(*Array(plateImages.size) { mutableStateListOf(*Array(toppings.size) { false }) }) }
     var interactionSource = remember { MutableInteractionSource() }
     val recomposeTrigger = remember { mutableStateOf(false) }
 
@@ -100,15 +102,10 @@ fun pizzaContent() {
                 .background(White)
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
 
             ) {
-                IconButton(
-                    modifier = Modifier.padding(top = 45.dp, start = 32.dp),
-                    onClick = {}
-                ) {
+                IconButton(modifier = Modifier.padding(top = 45.dp, start = 32.dp), onClick = {}) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_arrow_back_24),
                         contentDescription = "back button",
@@ -122,10 +119,7 @@ fun pizzaContent() {
                     fontSize = 20.sp,
                     text = "Pizza",
                 )
-                IconButton(
-                    modifier = Modifier.padding(top = 45.dp, start = 32.dp),
-                    onClick = {}
-                ) {
+                IconButton(modifier = Modifier.padding(top = 45.dp, start = 32.dp), onClick = {}) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_favorite_24),
                         contentDescription = "fav",
@@ -147,12 +141,21 @@ fun pizzaContent() {
                     contentDescription = "plate"
                 )
 
-                MyPager(Modifier.align(Center), plateImages, pizzaToppings, pagerState, pizzaSizes, recomposeTrigger)
+                MyPager(
+                    Modifier.align(Center),
+                    plateImages,
+                    pizzaToppings,
+                    pagerState,
+                    pizzaSizes,
+                    recomposeTrigger
+                )
             }
             SizeButtons(
                 Modifier
                     .align(alignment = Alignment.CenterHorizontally)
-                    .padding(top = 20.dp), pagerState, pizzaSizes
+                    .padding(top = 20.dp),
+                pagerState,
+                pizzaSizes
             )
 
 
@@ -170,8 +173,7 @@ fun pizzaContent() {
                         modifier = Modifier
                             .size(89.dp)
                             .background(
-                                color = if (isSelected) Green else Color.White,
-                                shape = CircleShape
+                                color = if (isSelected) Green else Color.White, shape = CircleShape
                             )
                             .clickable(
                                 interactionSource = interactionSource,
@@ -184,8 +186,7 @@ fun pizzaContent() {
                                         pizzaToppings[pagerState.currentPage].remove(drawableId)
                                     }
                                     recomposeTrigger.value = !recomposeTrigger.value
-                                }
-                            )
+                                })
                     ) {
                         Image(
                             painter = painterResource(id = drawableId),
@@ -202,13 +203,9 @@ fun pizzaContent() {
         }
         Spacer(modifier = Modifier.padding(top = 30.dp))
         Button(
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Brown,
-                contentColor = White
-            ),
-            shape = RoundedCornerShape(24.dp),
-            modifier = Modifier
+            onClick = { }, colors = ButtonDefaults.buttonColors(
+                containerColor = Brown, contentColor = White
+            ), shape = RoundedCornerShape(24.dp), modifier = Modifier
 
                 .padding(bottom = 16.dp)
         ) {
