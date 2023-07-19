@@ -27,6 +27,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,8 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextDirection.Companion.Content
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,41 +50,21 @@ import com.example.pizza.ui.theme.Green
 @Composable
 fun PizzaScreen(
     viewModel: PizzaScreenViewModel = hiltViewModel()
-
-){
+) {
     val state by viewModel.state.collectAsState()
-    PizzaContent(state)
+    PizzaContent(state, viewModel::toggleTopping, viewModel::changePizzaSize)
 }
-@OptIn(ExperimentalFoundationApi::class)
-@Preview
-@Composable
-fun PizzaContent() {
-    val plateImages = listOf(
-        R.drawable.bread_1,
-        R.drawable.bread_2,
-        R.drawable.bread_3,
-        R.drawable.bread_4,
-        R.drawable.bread_5,
 
-        )
-    val toppings = remember {
-        mutableStateListOf(
-            R.drawable.basil_group,
-            R.drawable.brocoli_group,
-            R.drawable.mushroom_group,
-            R.drawable.onion_group,
-            R.drawable.susage_group
-        )
-    }
-    val toppingssingle = remember {
-        mutableStateListOf(
-            R.drawable.basil,
-            R.drawable.broccoli,
-            R.drawable.mushroom,
-            R.drawable.onion,
-            R.drawable.sausage
-        )
-    }
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun PizzaContent(
+    state: PizzaScreenState,
+    onToppingToggled: (Int, Int) -> Unit,
+    onPizzaSizeSelected: (Int, Dp) -> Unit
+) {
+    val plateImages = state.plateImages
+    val toppings = state.toppings
+    val toppingssingle = state.toppingssingle
     val pizzaSizes =
         remember { mutableStateListOf(*Array(plateImages.size) { mutableStateOf(230.dp) }) }
     val pagerState = rememberPagerState()
