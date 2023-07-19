@@ -1,4 +1,4 @@
-package com.example.pizza
+package com.example.pizza.screen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState

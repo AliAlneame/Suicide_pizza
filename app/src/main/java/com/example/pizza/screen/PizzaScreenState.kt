@@ -1,7 +1,8 @@
-package com.example.pizza
+package com.example.pizza.screen
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.pizza.R
 
 data class PizzaScreenState(
     val currentPage: Int = 0,

@@ -1,4 +1,4 @@
-package com.example.pizza
+package com.example.pizza.screen
 
 
 import android.annotation.SuppressLint
@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.pizza.R
 import com.example.pizza.ui.theme.Brown
 import com.example.pizza.ui.theme.Green
 
@@ -129,7 +130,7 @@ fun PizzaContent(
                     contentDescription = "plate"
                 )
 
-                MyPager(
+                PizzaPager(
                     Modifier.align(Center),
                     plateImages,
                     pizzaToppings,
@@ -141,7 +142,7 @@ fun PizzaContent(
             Box(modifier = Modifier.fillMaxWidth()) {
                 SizeButtons(
                     Modifier
-                        .align(Alignment.Center)
+                        .align(Center)
                         .padding(top = 20.dp),
                     pagerState,
                     pizzaSizes
