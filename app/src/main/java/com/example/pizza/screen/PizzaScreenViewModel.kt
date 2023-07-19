@@ -36,14 +36,5 @@ class PizzaScreenViewModel @Inject constructor():
         _state.value = _pizzaState.value
     }
 
-    fun selectTopping(page: Int, topping: Int, isSelected: Boolean) {
-        _pizzaState.value = _pizzaState.value.copy(
-            selectedToppings = _pizzaState.value.selectedToppings.toMutableList().apply {
-                this[page] = this[page].toMutableList().apply {
-                    this[topping] = isSelected
-                }
-            }
-        )
-        _state.value = _pizzaState.value
-    }
+
 }
