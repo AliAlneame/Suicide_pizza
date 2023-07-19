@@ -36,7 +36,7 @@ fun PizzaPager(
     pizzaSizes: List<MutableState<Dp>>,
     recomposeTrigger: MutableState<Boolean>
 ) {
-    val A = recomposeTrigger.value
+    val triggerRecomposition = recomposeTrigger.value
 
     HorizontalPager(
         modifier = modifier, state = pagerState, pageCount = plateImages.size

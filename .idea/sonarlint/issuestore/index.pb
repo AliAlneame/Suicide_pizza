@@ -5,10 +5,6 @@ F
 local.properties,0\7\0712df971a99ac4d2fccb8e0fb19f377f3374cca
 ?
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
-h
-8app/src/main/java/com/example/pizza/screen/PizzaPager.kt,d\0\d0f8c663d74d7b8bba00455b53cef0a1e9906a76
-i
-9app/src/main/java/com/example/pizza/screen/PizzaScreen.kt,d\a\da30d0bf923438812025420273a815b927410d90
 c
 3app/src/main/java/com/example/pizza/MainActivity.kt,5\a\5af9d826ff7abead998c4ef3f0aecba02c4b3424
 d
