@@ -1,6 +1,7 @@
 package com.example.pizza
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,12 +37,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextDirection.Companion.Content
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pizza.ui.theme.Brown
 import com.example.pizza.ui.theme.Green
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun PizzaScreen(
+    viewModel: PizzaScreenViewModel = hiltViewModel()
+
+){
+    val state by viewModel.state.collectAsState()
+    PizzaContent(state)
+}
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
