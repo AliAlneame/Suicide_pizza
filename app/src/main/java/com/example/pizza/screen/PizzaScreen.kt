@@ -133,10 +133,10 @@ fun PizzaContent(
                 PizzaPager(
                     Modifier.align(Center),
                     plateImages,
-                    pizzaToppings,
+                    state,
                     pagerState,
-                    pizzaSizes,
-                    recomposeTrigger
+                    pizzaSizes
+
                 )
             }
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -157,7 +157,8 @@ fun PizzaContent(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 itemsIndexed(toppingssingle) { index, drawableId ->
-                    val isSelected = selectedDrawables[pagerState.currentPage][index]
+                    val isSelected = state.selectedToppings[pagerState.currentPage][index]
+
 
                     Box(
                         modifier = Modifier
@@ -169,13 +170,7 @@ fun PizzaContent(
                                 interactionSource = interactionSource,
                                 indication = null,
                                 onClick = {
-                                    selectedDrawables[pagerState.currentPage][index] = !isSelected
-                                    if (!isSelected) {
-                                        pizzaToppings[pagerState.currentPage].add(toppings[index])
-                                    } else {
-                                        pizzaToppings[pagerState.currentPage].remove(toppings[index])
-                                    }
-                                    recomposeTrigger.value = !recomposeTrigger.value
+                                    onToppingToggled(pagerState.currentPage, index)
                                 })
                     ) {
                         Image(

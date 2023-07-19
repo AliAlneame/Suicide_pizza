@@ -31,13 +31,10 @@ import androidx.compose.ui.unit.dp
 fun PizzaPager(
     modifier: Modifier = Modifier,
     plateImages: List<Int>,
-    pizzaToppings: SnapshotStateList<MutableList<Int>>,
+    state: PizzaScreenState,
     pagerState: PagerState,
     pizzaSizes: List<MutableState<Dp>>,
-    recomposeTrigger: MutableState<Boolean>
 ) {
-    val triggerRecomposition = recomposeTrigger.value
-
     HorizontalPager(
         modifier = modifier, state = pagerState, pageCount = plateImages.size
     ) { page ->
@@ -49,12 +46,12 @@ fun PizzaPager(
             contentDescription = "plate"
         )
 
-        pizzaToppings[page].forEach { topping ->
-            val toppingScale = remember { Animatable(3f) }
-            val toppingOffsetY = remember { Animatable(0f) }
+        state.selectedToppings[page].forEachIndexed { index, isSelected ->
+            if (isSelected) {
+                val toppingScale = remember { Animatable(3f) }
+                val toppingOffsetY = remember { Animatable(0f) }
 
-            if (pizzaToppings[page].contains(topping)) {
-                LaunchedEffect(topping) {
+                LaunchedEffect(index) {
                     toppingScale.animateTo(
                         targetValue = 1f,
                         animationSpec = tween(durationMillis = 500)
@@ -64,16 +61,16 @@ fun PizzaPager(
                         animationSpec = tween(durationMillis = 500)
                     )
                 }
-            }
 
-            Image(
-                modifier = Modifier
-                    .size(pizzaSize - 60.dp)
-                    .scale(toppingScale.value)
-                    .offset(y = toppingOffsetY.value.dp),
-                painter = painterResource(id = topping),
-                contentDescription = "topping"
-            )
+                Image(
+                    modifier = Modifier
+                        .size(pizzaSize - 60.dp)
+                        .scale(toppingScale.value)
+                        .offset(y = toppingOffsetY.value.dp),
+                    painter = painterResource(id = state.toppings[index]),
+                    contentDescription = "topping"
+                )
+            }
         }
     }
 }

@@ -5,8 +5,6 @@ F
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
 @
 local.properties,0\7\0712df971a99ac4d2fccb8e0fb19f377f3374cca
-d
-4app/src/main/java/com/example/pizza/BaseViewModel.kt,b\5\b5ee2389a758e5bf381c82262024543a6c029757
 c
 3app/src/main/java/com/example/pizza/MainActivity.kt,5\a\5af9d826ff7abead998c4ef3f0aecba02c4b3424
 d
