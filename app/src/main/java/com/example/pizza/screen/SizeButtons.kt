@@ -1,5 +1,6 @@
 package com.example.pizza.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SizeButtons(
@@ -46,64 +48,44 @@ fun SizeButtons(
 
     Box(modifier = Modifier.animateContentSize()) {
 
-        CircleCard(modifier = modifier, selectedButtonIndex = selectedButtonIndices[pagerState.currentPage])
+        CircleCard(
+            modifier = modifier,
+            selectedButtonIndex = selectedButtonIndices[pagerState.currentPage]
+        )
 
         Row(
-            modifier = modifier
-                .fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "S",
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .size(48.dp)
-                    .padding(top = 12.dp)
-                    .align(CenterVertically)
-                    .clickable(
-                        indication = null,
-                        interactionSource = interactionSource,
-                        onClick = {
-                            pizzaSizes[pagerState.currentPage].value = 180.dp
-                            selectedButtonIndices = selectedButtonIndices.toMutableList().also { it[pagerState.currentPage] = 0 }
-                        }
-                    )
+
+            SizeButton(
+                "S",
+                onClick = {
+                    pizzaSizes[pagerState.currentPage].value = 180.dp
+                    selectedButtonIndices = selectedButtonIndices.toMutableList()
+                        .also { it[pagerState.currentPage] = 0 }
+                },
+                interactionSource,
             )
-            Text(
-                text = "M",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(CenterVertically)
-                    .padding(top = 12.dp)
-                    .clickable(
-                        indication = null,
-                        interactionSource = interactionSource,
-                        onClick = {
-                            pizzaSizes[pagerState.currentPage].value = 200.dp
-                            selectedButtonIndices = selectedButtonIndices.toMutableList().also { it[pagerState.currentPage] = 1 }
-                        }
-                    )
+            SizeButton(
+                "M",
+                onClick = {
+                    pizzaSizes[pagerState.currentPage].value = 200.dp
+                    selectedButtonIndices = selectedButtonIndices.toMutableList()
+                        .also { it[pagerState.currentPage] = 1 }
+                },
+                interactionSource,
             )
-            Text(
-                text = "L",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .size(48.dp)
-                    .padding(top = 12.dp)
-                    .align(CenterVertically)
-                    .clickable(
-                        indication = null,
-                        interactionSource = interactionSource,
-                        onClick = {
-                            pizzaSizes[pagerState.currentPage].value = 230.dp
-                            selectedButtonIndices = selectedButtonIndices.toMutableList().also { it[pagerState.currentPage] = 2 }
-                        }
-                    )
+            SizeButton(
+                "L",
+                onClick = {
+                    pizzaSizes[pagerState.currentPage].value = 230.dp
+                    selectedButtonIndices = selectedButtonIndices.toMutableList()
+                        .also { it[pagerState.currentPage] = 2 }
+                },
+                interactionSource,
             )
+
         }
     }
 }
@@ -112,9 +94,9 @@ fun SizeButtons(
 fun CircleCard(selectedButtonIndex: Int, modifier: Modifier) {
     val circleOffset by animateDpAsState(
         targetValue = when (selectedButtonIndex) {
-            0 -> -46.dp
+            0 -> (-60).dp
             1 -> 0.dp
-            else -> 50.dp
+            else -> 60.dp
         }, animationSpec = tween(durationMillis = 500)
     )
 
@@ -122,9 +104,29 @@ fun CircleCard(selectedButtonIndex: Int, modifier: Modifier) {
         modifier = modifier
             .size(48.dp)
             .offset(x = circleOffset)
-            .shadow(elevation = 1.dp, shape = CircleShape)
+            .shadow(elevation = 4.dp, shape = CircleShape)
             .background(Color.White, CircleShape)
     ) {
 
     }
+}
+
+@Composable
+fun SizeButton(
+    size: String,
+    onClick: () -> Unit,
+    interactionSource: MutableInteractionSource,
+) {
+    Text(
+        text = size,
+        textAlign = TextAlign.Center,
+        fontSize = 16.sp,
+        modifier = Modifier
+            .padding(24.dp)
+            .clickable(
+                onClick = onClick,
+                indication = null,
+                interactionSource = interactionSource,
+            )
+    )
 }
