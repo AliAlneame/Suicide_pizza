@@ -50,7 +50,7 @@ fun SizeButtons(
 ) {
     var selectedButtonIndices by remember { mutableStateOf(MutableList(pizzaSizes.size) { 2 }) }
 
-    val interactionSource = remember { MutableInteractionSource() }  // Required for the clickables
+    val interactionSource = remember { MutableInteractionSource() }
 
     Box(modifier = Modifier.animateContentSize()) {
 
@@ -59,7 +59,7 @@ fun SizeButtons(
         Row(
             modifier = modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(24.dp)
+            horizontalArrangement = Arrangement.Center
         ) {
             Text(
                 text = "S",
@@ -120,9 +120,9 @@ fun SizeButtons(
 fun CircleCard(selectedButtonIndex: Int, modifier: Modifier) {
     val circleOffset by animateDpAsState(
         targetValue = when (selectedButtonIndex) {
-            0 -> 0.dp
-            1 -> 72.dp
-            else -> 144.dp
+            0 -> -46.dp
+            1 -> 0.dp
+            else -> 50.dp
         }, animationSpec = tween(durationMillis = 500)
     )
 

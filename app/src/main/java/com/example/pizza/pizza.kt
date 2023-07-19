@@ -59,7 +59,7 @@ import com.example.pizza.ui.theme.Green
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
-fun pizzaContent() {
+fun PizzaContent() {
     val plateImages = listOf(
         R.drawable.bread_1,
         R.drawable.bread_2,
@@ -77,7 +77,15 @@ fun pizzaContent() {
             R.drawable.susage_group
         )
     }
-
+    val toppingssingle = remember {
+        mutableStateListOf(
+            R.drawable.basil,
+            R.drawable.broccoli,
+            R.drawable.mushroom,
+            R.drawable.onion,
+            R.drawable.sausage
+        )
+    }
     val pizzaSizes =
         remember { mutableStateListOf(*Array(plateImages.size) { mutableStateOf(230.dp) }) }
     val pagerState = rememberPagerState()
@@ -151,14 +159,15 @@ fun pizzaContent() {
                     recomposeTrigger
                 )
             }
-            SizeButtons(
-                Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(top = 20.dp),
-                pagerState,
-                pizzaSizes
-            )
-
+            Box(modifier = Modifier.fillMaxWidth()) {
+                SizeButtons(
+                    Modifier
+                        .align(Alignment.Center)
+                        .padding(top = 20.dp),
+                    pagerState,
+                    pizzaSizes
+                )
+            }
 
 
             LazyRow(
@@ -167,7 +176,7 @@ fun pizzaContent() {
                     .padding(top = 60.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                itemsIndexed(toppings) { index, drawableId ->
+                itemsIndexed(toppingssingle) { index, drawableId ->
                     val isSelected = selectedDrawables[pagerState.currentPage][index]
 
                     Box(
@@ -182,9 +191,9 @@ fun pizzaContent() {
                                 onClick = {
                                     selectedDrawables[pagerState.currentPage][index] = !isSelected
                                     if (!isSelected) {
-                                        pizzaToppings[pagerState.currentPage].add(drawableId)
+                                        pizzaToppings[pagerState.currentPage].add(toppings[index])
                                     } else {
-                                        pizzaToppings[pagerState.currentPage].remove(drawableId)
+                                        pizzaToppings[pagerState.currentPage].remove(toppings[index])
                                     }
                                     recomposeTrigger.value = !recomposeTrigger.value
                                 })
@@ -199,27 +208,27 @@ fun pizzaContent() {
                     }
                 }
             }
-
+            Spacer(modifier = Modifier.padding(top = 150.dp))
+            Button(
+                onClick = { }, colors = ButtonDefaults.buttonColors(
+                    containerColor = Brown, contentColor = White
+                ), shape = RoundedCornerShape(24.dp), modifier = Modifier
+                    .align(CenterHorizontally)
+                    .padding(bottom = 16.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_credit_card_24),
+                    contentDescription = null,
+                    tint = Color(0xFFf5ede4),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .padding(horizontal = 4.dp)
+                )
+                Text(text = "Add to cart")
+            }
 
         }
-        Spacer(modifier = Modifier.padding(top = 30.dp))
-        Button(
-            onClick = { }, colors = ButtonDefaults.buttonColors(
-                containerColor = Brown, contentColor = White
-            ), shape = RoundedCornerShape(24.dp), modifier = Modifier
 
-                .padding(bottom = 16.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_credit_card_24),
-                contentDescription = null,
-                tint = Color(0xFFf5ede4),
-                modifier = Modifier
-                    .size(28.dp)
-                    .padding(horizontal = 4.dp)
-            )
-            Text(text = "Add to cart")
-        }
     }
 
 }
